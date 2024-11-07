@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        :root {
+            --arch-blue: #1793D1;
+            --arch-dark: #0C0E14;
+            --arch-darker: #060708;
+            --text-primary: #FFFFFF;
+            --text-secondary: #8F9BA8;
+            --accent-primary: var(--arch-blue);
+            --accent-secondary: #1D5F88;
+            --success: #4CAF50;
+            --warning: #FFA726;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--arch-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Logo Styles */
+        .logo-container {
+            text-align: center;
+            padding: 4rem 0;
+            background: var(--arch-darker);
+            margin-bottom: 2rem;
+            perspective: 1000px;
+        }
+
+        .logo-wrapper {
+            display: inline-block;
+            animation: rotateLogo 20s linear infinite;
+            transform-style: preserve-3d;
+        }
+
+        .devops-logo {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(45deg, var(--arch-blue), var(--accent-secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 0 50px rgba(23, 147, 209, 0.3);
+        }
+
+        .logo-icon {
+            font-size: 10rem;
+            color: var(--text-primary);
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+        }
+
+        @keyframes rotateLogo {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        /* Container and Layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation Styles */
+        .tech-nav {
+            background: var(--arch-darker);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            background: transparent;
+            border: 2px solid var(--arch-blue);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            min-width: 140px;
+            justify-content: center;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--arch-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(23, 147, 209, 0.2);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            background: var(--arch-darker);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--arch-blue);
+        }
+
+        .section-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(23, 147, 209, 0.1);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--arch-blue);
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 2rem;
+            color: var(--text-primary);
+        }
+
+        /* Documentation Links */
+        .doc-links {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .doc-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--arch-blue);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .github-link {
+            background: var(--arch-darker);
+            border: 2px solid var(--arch-blue);
+        }
+
+        .doc-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(23, 147, 209, 0.2);
+        }
+
+        /* Command Blocks */
+        .command-block {
+            background: var(--arch-darker);
+            border: 1px solid rgba(23, 147, 209, 0.2);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Fira Code', monospace;
+            position: relative;
+            overflow-x: auto;
+            color: var(--text-secondary);
+            white-space: pre;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(23, 147, 209, 0.1);
+            border: none;
+            color: var(--text-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--arch-blue);
+        }
+
+        /* Expandable Sections */
+        .expandable-section {
+            background: rgba(23, 147, 209, 0.05);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(23, 147, 209, 0.1);
+        }
+
+        .expandable-header {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .expandable-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .expandable-content.active {
+            padding: 1.5rem;
+            max-height: none;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            background: var(--arch-darker);
+            border-top: 1px solid rgba(23, 147, 209, 0.1);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(23, 147, 209, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--arch-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(23, 147, 209, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .devops-logo { width: 200px; height: 200px; }
+            .logo-icon { font-size: 8rem; }
+            .nav-item { width: 100%; }
+            .doc-links { flex-direction: column; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- DevOps Logo -->
+    <div class="logo-container">
+        <div class="logo-wrapper">
+            <div class="devops-logo">
+                <i class="fas fa-infinity logo-icon"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="tech-nav">
+            <div class="nav-container">
+                <button class="nav-item active" onclick="showSection('linux')">
+                    <i class="fab fa-linux"></i> Linux
+                </button>
+                <button class="nav-item" onclick="showSection('docker')">
+                    <i class="fab fa-docker"></i> Docker
+                </button>
+                <button class="nav-item" onclick="showSection('kubernetes')">
+                    <i class="fas fa-dharmachakra"></i> Kubernetes
+                </button>
+                <button class="nav-item" onclick="showSection('aws')">
+                    <i class="fab fa-aws"></i> AWS
+                </button>
+                <button class="nav-item" onclick="showSection('jenkins')">
+                    <i class="fab fa-jenkins"></i> Jenkins
+                </button>
+            </div>
+        </nav>
+
+        <!-- Linux Section -->
+        <section id="linux-section" class="content-section active">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fab fa-linux"></i>
+                </div>
+                <div>
+                    <h1 class="section-title">Linux Essentials</h1>
+                    <p>Master the Linux command line and system administration</p>
+                </div>
+            </div>
+
+            <div class="doc-links">
+                <a href="https://wiki.archlinux.org/" class="doc-link" target="_blank">
+                    <i class="fas fa-book"></i> Arch Linux Wiki
+                </a>
+                <a href="https://github.com/eissa-stack/Devops-Docs-BootCamp/blob/main/linux.txt"
+                   class="doc-link github-link" target="_blank">
+                    <i class="fab fa-github"></i> GitHub Guide
+                </a>
+            </div>
+
+            <div class="expandable-section">
+                <div class="expandable-header" onclick="toggleSection('linux-install')">
+                    <span>Essential Commands</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="linux-install" class="expandable-content">
+                    <div class="command-block">
+# Update system
+sudo pacman -Syu
+
+# Install essential packages
+sudo pacman -S base-devel git vim
+
+# System information
+uname -a
+lsblk
+df -h</div>
+                    <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="expandable-section">
+                <div class="expandable-header" onclick="toggleSection('linux-files')">
+                    <span>File Management</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="linux-files" class="expandable-content">
+                    <div class="command-block">
+# Create directory
+mkdir directory_name
+
+# Copy files
+cp source destination
+
+# Move/rename files
+mv source destination
+
+# Remove files/directories
+rm file_name
+rm -r directory_name</div>
+                    <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Docker Section -->
+        <section id="docker-section" class="content-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fab fa-docker"></i>
+                </div>
+                <div>
+                    <h1 class="section-title">Docker</h1>
+                    <p>Container management and deployment</p>
+                </div>
+            </div>
+
+            <div class="doc-links">
+                <a href="https://docs.docker.com" class="doc-link" target="_blank">
+                    <i class="fas fa-book"></i> Docker Docs
+                </a>
+                <a href="https://github.com/eissa-stack/Devops-Docs-BootCamp/blob/main/docker.txt"
+                   class="doc-link github-link" target="_blank">
+                    <i class="fab fa-github"></i> GitHub Guide
+                </a>
+            </div>
+
+            <div class="expandable-section">
+                <div class="expandable-header" onclick="toggleSection('docker-basics')">
+                    <span>Basic Commands</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="docker-basics" class="expandable-content">
+                    <div class="command-block">
+# Install Docker
+sudo pacman -S docker
+
+# Start Docker service
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Add user to docker group
+sudo usermod -aG docker $USER</div>
+                    <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="expandable-section">
+                <div class="expandable-header" onclick="toggleSection('docker-containers')">
+                    <span>Container Management</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="docker-containers" class="expandable-content">
+                    <div class="command-block">
+# Run a container
+docker run -d -p 80:80 nginx
+
+# List containers
+docker ps
+docker ps -a
+
+# Stop container
+docker stop container_id
+
+# Remove container
+docker rm container_id</div>
+                    <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                </div>
+            </div>
+        </section>
+	<!-- Kubernetes Section -->
+<section id="kubernetes-section" class="content-section">
+    <div class="section-header">
+        <div class="section-icon">
+            <i class="fas fa-dharmachakra"></i>
+        </div>
+        <div>
+            <h1 class="section-title">Kubernetes</h1>
+            <p>Container orchestration and cluster management</p>
+        </div>
+    </div>
+
+    <div class="doc-links">
+        <a href="https://kubernetes.io/docs/home/" class="doc-link" target="_blank">
+            <i class="fas fa-book"></i> Kubernetes Docs
+        </a>
+        <a href="https://github.com/eissa-stack/Devops-Docs-BootCamp/blob/main/kubernetes.txt"
+           class="doc-link github-link" target="_blank">
+            <i class="fab fa-github"></i> GitHub Guide
+        </a>
+    </div>
+
+    <div class="expandable-section">
+        <div class="expandable-header" onclick="toggleSection('k8s-install')">
+            <span>Installation & Setup</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="k8s-install" class="expandable-content">
+            <div class="command-block">
+# Install kubectl
+sudo pacman -S kubectl
+
+# Install Minikube
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+# Start Minikube
+minikube start
+
+# Verify installation
+kubectl cluster-info</div>
+            <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+        </div>
+    </div>
+
+    <div class="expandable-section">
+        <div class="expandable-header" onclick="toggleSection('k8s-pods')">
+            <span>Pod Management</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="k8s-pods" class="expandable-content">
+            <div class="command-block">
+# Create pod
+kubectl create -f pod.yaml
+
+# List pods
+kubectl get pods
+
+# Pod details
+kubectl describe pod pod-name
+
+# Delete pod
+kubectl delete pod pod-name</div>
+            <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+        </div>
+    </div>
+</section>
+
+<!-- AWS Section -->
+<section id="aws-section" class="content-section">
+    <div class="section-header">
+        <div class="section-icon">
+            <i class="fab fa-aws"></i>
+        </div>
+        <div>
+            <h1 class="section-title">AWS</h1>
+            <p>Cloud infrastructure and services</p>
+        </div>
+    </div>
+
+    <div class="doc-links">
+        <a href="https://docs.aws.amazon.com" class="doc-link" target="_blank">
+            <i class="fas fa-book"></i> AWS Docs
+        </a>
+        <a href="https://github.com/eissa-stack/Devops-Docs-BootCamp/blob/main/aws.txt"
+           class="doc-link github-link" target="_blank">
+            <i class="fab fa-github"></i> GitHub Guide
+        </a>
+    </div>
+
+    <div class="expandable-section">
+        <div class="expandable-header" onclick="toggleSection('aws-cli')">
+            <span>AWS CLI Setup</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="aws-cli" class="expandable-content">
+            <div class="command-block">
+# Install AWS CLI
+sudo pacman -S aws-cli
+
+# Configure AWS
+aws configure
+
+# Test configuration
+aws sts get-caller-identity</div>
+            <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+        </div>
+    </div>
+
+    <div class="expandable-section">
+        <div class="expandable-header" onclick="toggleSection('aws-ec2')">
+            <span>EC2 Management</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="aws-ec2" class="expandable-content">
+            <div class="command-block">
+# List instances
+aws ec2 describe-instances
+
+# Create instance
+aws ec2 run-instances --image-id ami-xxxxx --instance-type t2.micro
+
+# Start/Stop instances
+aws ec2 start-instances --instance-ids i-xxxxx
+aws ec2 stop-instances --instance-ids i-xxxxx</div>
+            <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+        </div>
+    </div>
+</section>
+
+<!-- Jenkins Section -->
+<section id="jenkins-section" class="content-section">
+    <div class="section-header">
+        <div class="section-icon">
+            <i class="fab fa-jenkins"></i>
+        </div>
+        <div>
+            <h1 class="section-title">Jenkins</h1>
+            <p>Continuous Integration and Deployment</p>
+        </div>
+    </div>
+
+    <div class="doc-links">
+        <a href="https://www.jenkins.io/doc/" class="doc-link" target="_blank">
+            <i class="fas fa-book"></i> Jenkins Docs
+        </a>
+        <a href="https://github.com/eissa-stack/Devops-Docs-BootCamp/blob/main/jenkins.txt"
+           class="doc-link github-link" target="_blank">
+            <i class="fab fa-github"></i> GitHub Guide
+        </a>
+    </div>
+
+    <div class="expandable-section">
+        <div class="expandable-header" onclick="toggleSection('jenkins-install')">
+            <span>Installation</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="jenkins-install" class="expandable-content">
+            <div class="command-block">
+# Install Jenkins
+sudo pacman -S jenkins
+
+# Start Jenkins
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+
+# Get initial password
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword</div>
+            <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+        </div>
+    </div>
+
+    <div class="expandable-section">
+        <div class="expandable-header" onclick="toggleSection('jenkins-pipeline')">
+            <span>Pipeline Example</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="jenkins-pipeline" class="expandable-content">
+            <div class="command-block">
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'npm run deploy'
+            }
+        }
+    }
+}</div>
+            <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>By Abdullrahman Eissa © 2024-2025 - All Rights Reserved</p>
+    <div class="social-links">
+        <a href="https://github.com/eissa-stack" class="social-link" target="_blank">
+            <i class="fab fa-github"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/abdullrahman-eissa" class="social-link" target="_blank">
+            <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="https://eissa-stack.github.io/MyBio/" class="social-link" target="_blank">
+            <i class="fas fa-user-circle"></i>
+        </a>
+    </div>
+</footer>
+
+</div><!-- End of container -->
+
+<script>
+// Show selected section
+function showSection(sectionId) {
+    // Hide all sections
+    document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+    });
+
+    // Remove active class from all nav items
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    // Show selected section
+    document.getElementById(`${sectionId}-section`).classList.add('active');
+    document.querySelector(`[onclick="showSection('${sectionId}')"]`).classList.add('active');
+}
+
+// Copy command functionality
+function copyCommand(button) {
+    const commandBlock = button.previousElementSibling;
+    navigator.clipboard.writeText(commandBlock.textContent);
+    button.textContent = 'Copied!';
+    setTimeout(() => {
+        button.textContent = 'Copy';
+    }, 2000);
+}
+
+// Toggle expandable sections
+function toggleSection(sectionId) {
+    const content = document.getElementById(sectionId);
+    content.classList.toggle('active');
+
+    // Toggle chevron icon
+    const header = content.previousElementSibling;
+    const icon = header.querySelector('i.fas');
+    icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0)';
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    showSection('linux');
+});
+</script>
+
+</body>
+</html>
